@@ -1,0 +1,28 @@
+= space_object
+
+* {Homepage}[https://github.com/fruchtose/space_object#readme]
+* {Issues}[https://github.com/fruchtose/space_object/issues]
+* {Documentation}[http://rubydoc.info/gems/space_object/frames]
+* {Email}[mailto:rfruchtose at gmail.com]
+
+== Description
+
+TODO: Description
+
+== Features
+
+== Examples
+
+  require 'space_object'
+
+== Requirements
+
+== Install
+
+  $ gem install space_object
+
+== Copyright
+
+Copyright (c) 2013 Robert Fruchtman
+
+See LICENSE.txt for details.
