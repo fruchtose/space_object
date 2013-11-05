@@ -25,5 +25,26 @@ describe SpaceObject::Parser do
     context 'when given multiple key-value pairs' do
       it_has_behavior 'correctness', "1 2\na b", SpaceObject::Base.try_convert({'1' => '2', 'a' => 'b'})
     end
+
+    context 'when given a nested space' do
+      document = "foo\n" +
+        " bar\n" +
+        " baz foobar"
+      expected = SpaceObject::Base.try_convert({
+        'foo' => SpaceObject::Base.try_convert({
+          'bar' => SpaceObject::Base.new,
+          'baz' => 'foobar'
+        })
+      })
+      it_has_behavior 'correctness', document, expected
+    end
+
+    it 'produces a SpaceObject::Base object ordered according to input' do
+      ('a'..'d').to_a.permutation.each do |permutation|
+        document = permutation.join("\n")
+        object = SpaceObject::Parser.new(document).parse
+        expect(object.keys).to eq(permutation)
+      end
+    end
   end
 end

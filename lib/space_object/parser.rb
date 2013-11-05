@@ -16,21 +16,19 @@ module SpaceObject
 
     private
     def prepare_string
-      @document =  @document.strip.gsub(/(\r\n|\n\r|\n\n+)/, '\n')
+      @document =  @document.strip.gsub(/(\r\n|\n\r|\n\n+)/, "\n")
     end
 
     def parse_string(str)
       str.split(DELIMITER).inject(Base.new) do |obj, space|
-        key, value = if matches = LEAF.match(space)
-          offset = matches[1].length + 1
-          [matches[1], space[offset..-1].gsub(NEST_SPACING, '\n')]
-        elsif matches = KEY_LINE.match(space)
+        key, value = if matches = KEY_LINE.match(space)
           offset = matches[1].length
-          [matches[1], parse_string(space[offset..-1].gsub(NEST_SPACING, '\n'))]
+          [matches[1], parse_string(space[offset..-1].gsub(NEST_SPACING, "\n"))]
+        elsif matches = LEAF.match(space)
+          offset = matches[1].length + 1
+          [matches[1], space[offset..-1].gsub(NEST_SPACING, "\n")]
         end
-        next unless key
-
-        obj[key] = value
+        key and obj[key] = value
         obj
       end
     end
