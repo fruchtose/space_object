@@ -8,10 +8,18 @@ describe SpaceObject do
   describe "::parse" do
     let(:test_document) { 'foo bar' }
 
+    before(:each) {
+      @instance = SpaceObject::Parser.new(test_document)
+      SpaceObject::Parser.stub(:new).and_return(@instance)
+    }
+
     it "creates a new SpaceObject::Parser" do
-      instance = SpaceObject::Parser.new(test_document)
-      SpaceObject::Parser.stub(:new).and_return(instance)
       SpaceObject.parse(test_document) and expect(SpaceObject::Parser).to have_received(:new).with(test_document)
+    end
+
+    it "calls SpaceObject::Parser#parse" do
+      @instance.stub(:parse)
+      SpaceObject.parse(test_document) and expect(@instance).to have_received(:parse)
     end
   end
 end
