@@ -1,5 +1,4 @@
 require 'space_object/base'
-require 'pry'
 
 module SpaceObject
   class Encoder
