@@ -19,6 +19,9 @@ module SpaceObject
       @document =  @document.strip.gsub(/(\r\n|\n\r|\n\n+)/, "\n")
     end
 
+    def populate_space(space, str)
+    end
+
     def parse_string(str)
       str.split(DELIMITER).inject(Base.new) do |obj, space|
         key, value = if matches = KEY_LINE.match(space)
@@ -28,7 +31,7 @@ module SpaceObject
           offset = matches[1].length + 1
           [matches[1], space[offset..-1].gsub(NEST_SPACING, "\n")]
         end
-        key and obj[key] = value
+        (key.nil? || key.empty?) or obj[key] = value
         obj
       end
     end
