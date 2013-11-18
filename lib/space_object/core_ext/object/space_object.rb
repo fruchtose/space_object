@@ -5,9 +5,9 @@ require 'space_object/string_encodable'
 
 class Array
   def to_space_object
-    each_with_index.map do |item, index|
-      {index => item}.to_space_object
-    end
+    Hash[each_with_index.map do |item, index|
+      [index, item]
+    end].to_space_object
   end
 
   def to_space_value
